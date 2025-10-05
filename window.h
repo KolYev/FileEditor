@@ -14,6 +14,7 @@
 LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 void AddMenus(HWND);
 void AddControls(HWND);
+void LoadFileContent(HWND hEdit);
 int CreateAndShowWindow(HINSTANCE hInstance, int nCmdShow);
 
 extern HMENU hMenu;

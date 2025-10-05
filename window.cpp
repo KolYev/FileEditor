@@ -20,33 +20,25 @@ void AddControls(HWND);
 HMENU hMenu;
 HWND hEdit;
 
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow)
-{
-    // MessageBox(NULL, TEXT("HELLO"), TEXT("My first GUI"), MB_OK);
-    WNDCLASSW wc = {0};
-
-    wc.hbrBackground = (HBRUSH)COLOR_WINDOW ;
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hInstance = hInst;
-    wc.lpszClassName = L"myWindowClass";
-    wc.lpfnWndProc = WindowProcedure;
-
-    if(!RegisterClassW(&wc))
-        return -1;
-
-    CreateWindowW(L"myWindowClass", L"My Window", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 500, 500,
-         NULL, NULL, NULL, NULL);
-
-    MSG msg = {0};
-
-    while (GetMessage(&msg, NULL, 0, 0))
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+void LoadFileContent(HWND hEdit) {
+    ifstream file("mynote.txt");
+    if (file.is_open()) {
+        string content;
+        string line;
+        while (getline(file, line)) {
+            content += line + "\n";
+        }
+        file.close();
+        
+        int size = MultiByteToWideChar(CP_UTF8, 0, content.c_str(), -1, NULL, 0);
+        if (size > 0) {
+            wstring wideText(size - 1, L'\0');
+            MultiByteToWideChar(CP_UTF8, 0, content.c_str(), -1, &wideText[0], size);
+            SetWindowTextW(hEdit, wideText.c_str());
+        }
+    } else {
+        SetWindowTextW(hEdit, L"...");
     }
-    
-    
-    return 0;
 }
 
 
@@ -109,6 +101,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
     case WM_CREATE:
         AddMenus(hWnd);
         AddControls(hWnd);
+        LoadFileContent(hEdit);
         return 0;
     case WM_DESTROY:
        PostQuitMessage(0);
