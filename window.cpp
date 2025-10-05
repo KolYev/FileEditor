@@ -90,9 +90,9 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
                     MultiByteToWideChar(CP_UTF8, 0, content.c_str(), -1, wideText, 1000);
                     SetWindowTextW(hEdit, wideText);
                     
-                    MessageBoxW(hWnd, L"Файл загружен!", L"Успех", MB_OK);
+                    MessageBoxW(hWnd, L"File is uploaded!", L"Успех", MB_OK);
                 } else {
-                    MessageBoxW(hWnd, L"Файл не найден!", L"Ошибка", MB_OK);
+                    MessageBoxW(hWnd, L"File not found!", L"Ошибка", MB_OK);
                 }
                 return 0;
             }
@@ -136,10 +136,10 @@ void AddMenus(HWND hWnd)
 
 void AddControls(HWND hWnd)
 {
-    CreateWindowW(L"static", L"Enter Text Here: ", WS_VISIBLE | WS_CHILD | WS_BORDER | SS_CENTER, 200, 100, 100, 50, hWnd,
+    CreateWindowW(L"static", L"Enter Text Here: ", WS_VISIBLE | WS_CHILD | WS_BORDER | SS_CENTER, 200, 100, 1000, 50, hWnd,
                 NULL, NULL, NULL);
 
-    hEdit = CreateWindowW(L"Edit", L"...", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL, 200, 152, 100, 50, hWnd,
+    hEdit = CreateWindowW(L"Edit", L"...", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL, 200, 152, 1000, 500, hWnd,
     NULL, NULL, NULL);
 }
 
@@ -156,7 +156,7 @@ int CreateAndShowWindow(HINSTANCE hInst, int nCmdShow)
         return -1;
 
     CreateWindowW(L"myWindowClass", L"My Window with File Operations", 
-                  WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 600, 500,
+                  WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1500, 1000,
                   NULL, NULL, NULL, NULL);
 
     MSG msg = {0};
