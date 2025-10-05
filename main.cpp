@@ -1,28 +1,15 @@
 #include <iostream>
 #include <windows.h>
+#include "window.h"
 #include <fstream>
 #include <string>
 
 using namespace std;
 
 int main() {
-    system("chcp 65001 > nul");
-    ofstream MyFile("mynote.txt");
-
-    string myText;
-    getline(cin, myText);
-
-    MyFile << myText;
-    MyFile.close();
+    HINSTANCE hInstance = GetModuleHandle(NULL);
     
 
-    ifstream ReadFile("mynote.txt");
-    while (getline(ReadFile, myText))
-    {
-        cout<<myText;
-    }
-
-    ReadFile.close();
-    
-    return 0;
+    int result = CreateAndShowWindow(hInstance, SW_SHOW);
+    return result;
 }
